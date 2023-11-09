@@ -1,9 +1,10 @@
 "use client";
 
 import { GlobalContext } from "@/context";
-import { adminNavOptions, navOptions, styles } from "@/context/utils";
+import { adminNavOptions, navOptions } from "@/context/utils";
 import { Fragment, useContext } from "react";
-import CommonModal from "./CommonModal";
+import CommonModal from "../CommonModal";
+
 
 const isAdminView = false;
 const isAuthUser = true;

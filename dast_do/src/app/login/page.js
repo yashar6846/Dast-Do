@@ -7,6 +7,9 @@ import { loginFormControls } from "@/utils";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
+import ComponentLevelLoader from "@/components/Loader/componentlevel";
+import Notification from "@/components/Notifcation";
+import { toast } from "react-toastify";
 
 
 const initialFormdata = {
@@ -21,8 +24,8 @@ export default function Login() {
     setIsAuthUser,
     user,
     setUser,
-    // componentLevelLoader,
-    // setComponentLevelLoader,
+    componentLevelLoader,
+    setComponentLevelLoader,
   } = useContext(GlobalContext);
 
   const router = useRouter();
@@ -40,20 +43,27 @@ export default function Login() {
   }
 
   async function handleLogin() {
-    // setComponentLevelLoader({ loading: true, id: "" });
+    setComponentLevelLoader({ loading: true, id: "" });
     const res = await login(formData);
 
     console.log(res);
   
     if(res.success){
+      toast.success(res.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setIsAuthUser(true);
       setUser(res?.finalData?.user);
       setFormData(initialFormdata);
       Cookies.set("token", res?.finalData?.token);
       localStorage.setItem("user", JSON.stringify(res?.finalData?.user));
-      
+      setComponentLevelLoader({ loading: false, id: "" });
     } else {
+      toast.error(res.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setIsAuthUser(false)
+      setComponentLevelLoader({ loading: false, id: "" });
     }
   }
   console.log(isAuthUser, user);
@@ -95,14 +105,17 @@ export default function Login() {
                   disabled={!isValidForm()}
                   onClick={handleLogin}
                 >
-                  {/* {componentLevelLoader && componentLevelLoader.loading ? (
+                   {componentLevelLoader && componentLevelLoader.loading ? (
                       <ComponentLevelLoader
                         text={"Logging In"}
                         color={"#ffffff"}
                         loading={
                           componentLevelLoader && componentLevelLoader.loading
-                        }/> */}
-                  Login
+                        }
+                         /> 
+                   ):(
+                    'Login'
+                )}
                 </button>
                 <div className="flex flex-col gap-2">
                   <p>New to website ?</p>
@@ -120,7 +133,7 @@ export default function Login() {
           </div>
         </div>
       </div>
-      {/* <Notification /> */}
+      <Notification/>
     </div>
   );
 }

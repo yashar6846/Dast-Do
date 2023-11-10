@@ -19,4 +19,4 @@ const connectToDB = async () => {
 export default connectToDB;
 
 
-  // "mongodb+srv://yasharnajafi6846:1234554321@cluster0.kfd8bdf.mongodb.net/"
+ 

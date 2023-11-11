@@ -8,6 +8,8 @@ import Cookies from "js-cookie";
 import { usePathname, useRouter } from "next/navigation";
 // import CartModal from "../CartModal";
 
+// const isAdminView = true;
+
 function NavItems({ isModalView = false, isAdminView, router }) {
   return (
     <div
@@ -61,7 +63,9 @@ export default function Navbar() {
   const pathName = usePathname();
   const router = useRouter();
 
-  console.log(currentUpdatedProduct, "navbar");
+  console.log(pathName);
+
+  // console.log(currentUpdatedProduct, "navbar");
 
   // useEffect(() => {
   //   if (
@@ -113,35 +117,35 @@ export default function Navbar() {
                   Cart
                 </button>
               </Fragment>
-            ) : null}
-            {user?.role === "admin" ? (
-              isAdminView ? (
-                <button
-                  className={
-                    "mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium upprcase tracking-wide text-white"
-                  }
-                  onClick={() => router.push("/")}
-                >
-                  Client View
-                </button>
-              ) : (
-                <button
-                  onClick={() => router.push("/admin-view")}
-                  className={
-                    "mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium upprcase tracking-wide text-white"
-                  }
-                >
-                  Admin View
-                </button>
-              )
-            ) : null}
-            {isAuthUser ? (
-              <button
-                onClick={handleLogout}
-                className={
-                  "mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium upprcase tracking-wide text-white"
-                }
-              >
+             ) : null}
+             {user?.role === "admin" ? (
+               isAdminView ? (
+                 <button
+                   className={
+                     "mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium upprcase tracking-wide text-white"
+                   }
+                   onClick={() => router.push("/")}
+                 >
+                   Client View
+                 </button>
+               ) : (
+                 <button
+                   onClick={() => router.push("/admin-view")}
+                   className={
+                     "mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium upprcase tracking-wide text-white"
+                   }
+                 >
+                   Admin View
+                 </button>
+               )
+             ) : null}
+             {isAuthUser ? (
+               <button
+                 onClick={handleLogout}
+                 className={
+                   "mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium upprcase tracking-wide text-white"
+                 }
+               >
                 Logout
               </button>
             ) : (
@@ -193,7 +197,7 @@ export default function Navbar() {
         show={showNavModal}
         setShow={setShowNavModal}
       />
-      {showCartModal && <CartModal />}
+      {/* {showCartModal && <CartModal />} */}
     </>
   );
 }

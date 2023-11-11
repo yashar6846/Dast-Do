@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 import { useContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
-// const isRegistered = false;
 
 const initialFormData = {
   name: "",
@@ -65,11 +64,10 @@ export default function Register() {
     console.log(data);
   }
 
-  // useEffect(() => {
-  //   if (isAuthUser) router.push("/");
-  // }, [isAuthUser]);
+  useEffect(() => {
+    if (isAuthUser) router.push("/");
+  }, [isAuthUser]);
    
-  // }
 
   return (
     <div className="bg-white relative">

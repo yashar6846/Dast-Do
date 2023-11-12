@@ -189,17 +189,18 @@ export const navOptions = [
   ];
   
   export const firebaseConfig = {
-    apiKey: "API_KEY",
-    authDomain: "AUTH_DOMAIN",
-    projectId: "PROJECT_ID",
-    storageBucket: "STROAGE_BUCKET",
-    messagingSenderId: "MESSAGING_SENDER_ID",
-    appId: "APP_ID",
-    measurementId: "MEASUREMENT_ID",
+    apiKey: "AIzaSyBvl6_naQ2kuyUKtC4QaN2yuS6L6Lq8GCY",
+    authDomain: "next-js-dastdo-2023.firebaseapp.com",
+    projectId: "next-js-dastdo-2023",
+    storageBucket: "next-js-dastdo-2023.appspot.com",
+    messagingSenderId: "362265627174",
+    appId: "1:362265627174:web:c464a6e3ecbd0c84f174e7",
+    measurementId: "G-QTCG47M0RM"
   };
   
+  
   export const firebaseStroageURL =
-    "YOUR_FIREBASE_STROAGE_URL";
+    "gs://next-js-dastdo-2023.appspot.com";
   
   export const addNewAddressFormControls = [
     {

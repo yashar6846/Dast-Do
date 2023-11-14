@@ -1,13 +1,13 @@
-import mongoose from "mongoose";
 
+import mongoose from "mongoose"
 const configOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
 
 const connectToDB = async () => {
-  const connectionUrl ="mongodb+srv://yasharnajafi6846:12345yash6846@cluster0.jbwaaa5.mongodb.net/"
-     
+  const connectionUrl =process.env.your_mongodb_url
+    console.log(connectionUrl);
   mongoose
     .connect(connectionUrl, configOptions)
     .then(() => console.log("Ecommerce database connected successfully!"))
@@ -17,6 +17,3 @@ const connectToDB = async () => {
 };
 
 export default connectToDB;
-
-
- 

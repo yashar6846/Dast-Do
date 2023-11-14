@@ -43,7 +43,7 @@ export async function POST(req) {
         priceDrop,
       } = extractData;
 
-      const { error } = AddNewProductSchema.validate({
+      const { error } = AddNewProductSchema.validate({  
         name,
         description,
         price,

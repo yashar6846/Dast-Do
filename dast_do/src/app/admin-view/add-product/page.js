@@ -1,41 +1,58 @@
-
-"use client"
+"use client";
 
 import InputComponent from "@/components/FormElements/InputComponent";
 import SelectComponent from "@/components/FormElements/SelectComponent";
 import TileComponent from "@/components/FormElements/TileComponent";
 import ComponentLevelLoader from "@/components/Loader/componentlevel";
-import { AvailableSizes, adminAddProductformControls, firebaseConfig, firebaseStroageURL } from "@/utils";
-import {initializeApp} from "firebase/app";
+import Notification from "@/components/Notifcation";
+import { GlobalContext } from "@/context";
 import { addNewProduct, updateAProduct } from "@/services/product";
-import {  getDownloadURL,
-    getStorage,
-    ref,
-    uploadBytesResumable,} from 'firebase/storage';
-
+import {
+  AvailableSizes,
+  adminAddProductformControls,
+  firebaseConfig,
+  firebaseStroageURL,
+} from "@/utils";
+import { initializeApp } from "firebase/app";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { resolve } from "styled-jsx/css";
-import { GlobalContext } from "@/context";
-import Notification from "@/components/Notifcation";
+
+const initialFormData = {
+  name: "",
+  price: 0,
+  description: "",
+  category: "men",
+  sizes: [],
+  deliveryInfo: "",
+  onSale: "no",
+  imageUrl: "",
+  priceDrop: 0,
+};
 
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app, firebaseStroageURL);
 
 const createUniqueFileName = (getFile) => {
-  const timeStamp = Date.now();
-  const randomStringValue = Math.random().toString(36).substring(2, 12);
+    const timeStamp = Date.now();
+    const randomStringValue = Math.random().toString(36).substring(2, 12);
+  
+    return `${getFile.name}-${timeStamp}-${randomStringValue}`;
+  };
 
-  return `${getFile.name}-${timeStamp}-${randomStringValue}`;
-};
+async function helperForUPloadingImageToFirebase(file){
+   const getFileName = createUniqueFileName(file);
+   const storageReference = ref(storage, `ecommerce/${getFileName}`)
+   const uploadImage = uploadBytesResumable(storageReference, file)
 
-async function helperForUPloadingImageToFirebase(file) {
-  const getFileName = createUniqueFileName(file);
-  const storageReference = ref(storage, `ecommerce/${getFileName}`);
-  const uploadImage = uploadBytesResumable(storageReference, file);
-
-  return new Promise((resolve, reject) => {
+   return new Promise((resolve, reject) => {
     uploadImage.on(
       "state_changed",
       (snapshot) => {},
@@ -52,95 +69,54 @@ async function helperForUPloadingImageToFirebase(file) {
   });
 }
 
-const initialFormData = {
-  name: "",
-  price: 0,
-  description: "",
-  category: "men",
-  sizes: [],
-  deliveryInfo: "",
-  onSale: "no",
-  imageUrl: "",
-  priceDrop: 0,
-};
-
 export default function AdminAddNewProduct() {
-  const [formData, setFormData] = useState(initialFormData);
+   const [formData, setFormData] = useState(initialFormData);
 
-  const {
-    componentLevelLoader,
-    setComponentLevelLoader,
-    currentUpdatedProduct,
-    setCurrentUpdatedProduct,
-  } = useContext(GlobalContext);
+    async function handleImage(e) {
+        console.log(e.target.files);
+        const extractImageUrl = await helperForUPloadingImageToFirebase(e.target.files[0])
+        console.log(extractImageUrl);
 
-  console.log(currentUpdatedProduct);
-
-  const router = useRouter();
-
-//   useEffect(() => {
-//     if (currentUpdatedProduct !== null) setFormData(currentUpdatedProduct);
-//   }, [currentUpdatedProduct]);
-
-  async function handleImage(event) {
-    const extractImageUrl = await helperForUPloadingImageToFirebase(
-      event.target.files[0]
-    );
-
-    if (extractImageUrl !== "") {
-      setFormData({
-        ...formData,
-        imageUrl: extractImageUrl,
-      });
-    }
-  }
-
-  function handleTileClick(getCurrentItem) {
-    let cpySizes = [...formData.sizes];
-    const index = cpySizes.findIndex((item) => item.id === getCurrentItem.id);
-
-    if (index === -1) {
-      cpySizes.push(getCurrentItem);
-    } else {
-      cpySizes = cpySizes.filter((item) => item.id !== getCurrentItem.id);
+        if (extractImageUrl !== "") {
+            setFormData({
+              ...formData,
+              imageUrl: extractImageUrl,
+            });
+          }
     }
 
-    setFormData({
-      ...formData,
-      sizes: cpySizes,
-    });
-  }
+    function handleTileClick(getCurrentItem) {
+        let cpySizes = [...formData.sizes];
+        const index = cpySizes.findIndex((item) => item.id === getCurrentItem.id);
+    
+        if (index === -1) {
+          cpySizes.push(getCurrentItem);
+        } else {
+          cpySizes = cpySizes.filter((item) => item.id !== getCurrentItem.id);
+        }
+    
+        setFormData({
+          ...formData,
+          sizes: cpySizes,
+        });
+      }
 
-  async function handleAddProduct() {
-    setComponentLevelLoader({ loading: true, id: "" });
-    const res =
-      currentUpdatedProduct !== null
-        ? await updateAProduct(formData)
-        : await addNewProduct(formData);
-
-    console.log(res);
-
-    if (res.success) {
-      setComponentLevelLoader({ loading: false, id: "" });
-      toast.success(res.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-
-      setFormData(initialFormData);
-      setCurrentUpdatedProduct(null)
-      setTimeout(() => {
-        router.push("/admin-view/all-products");
-      }, 1000);
-    } else {
-      toast.error(res.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      setComponentLevelLoader({ loading: false, id: "" });
-      setFormData(initialFormData);
-    }
-  }
-
-  console.log(formData);
+      async function handleAddProduct() {
+        // setComponentLevelLoader({ loading: true, id: "" });
+        const res = await addNewProduct(formData);
+        //   currentUpdatedProduct !== null
+        //     ? await updateAProduct(formData)
+        //     : await addNewProduct(formData);
+    
+        console.log(res)
+      }
+    console.log(formData);
+  //   const {
+  //     componentLevelLoader,
+  //     setComponentLevelLoader,
+  //     currentUpdatedProduct,
+  //     setCurrentUpdatedProduct,
+  //   } = useContext(GlobalContext);
 
   return (
     <div className="w-full mt-5 mr-0 mb-0 ml-0 relative">
@@ -156,7 +132,7 @@ export default function AdminAddNewProduct() {
           <div className="flex gap-2 flex-col">
             <label>Available sizes</label>
             <TileComponent
-              selected={formData.sizes}
+               selected={formData.sizes}
               onClick={handleTileClick}
               data={AvailableSizes}
             />
@@ -168,10 +144,10 @@ export default function AdminAddNewProduct() {
                 placeholder={controlItem.placeholder}
                 label={controlItem.label}
                 value={formData[controlItem.id]}
-                onChange={(event) => {
+                onChange={(e) => {
                   setFormData({
                     ...formData,
-                    [controlItem.id]: event.target.value,
+                    [controlItem.id]: e.target.value,
                   });
                 }}
               />
@@ -180,34 +156,25 @@ export default function AdminAddNewProduct() {
                 label={controlItem.label}
                 options={controlItem.options}
                 value={formData[controlItem.id]}
-                onChange={(event) => {
+                onChange={(e) => {
                   setFormData({
                     ...formData,
-                    [controlItem.id]: event.target.value,
+                    [controlItem.id]: e.target.value,
                   });
                 }}
               />
             ) : null
           )}
+
           <button
-            onClick={handleAddProduct}
+             onClick={handleAddProduct}
             className="inline-flex w-full items-center justify-center bg-black px-6 py-4 text-lg text-white font-medium uppercase tracking-wide"
           >
-            {componentLevelLoader && componentLevelLoader.loading ? (
-              <ComponentLevelLoader
-                text={currentUpdatedProduct !== null ? 'Updating Product' : "Adding Product"}
-                color={"#ffffff"}
-                loading={componentLevelLoader && componentLevelLoader.loading}
-              />
-            //  ) : currentUpdatedProduct !== null ? (
-            //    "Update Product"
-            ) : (
-              "Add Product"
-            )}
+            Add prodact
           </button>
         </div>
       </div>
-      <Notification />
+      {/* <Notification /> */}
     </div>
   );
 }

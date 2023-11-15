@@ -6,9 +6,10 @@ import { Fragment, useContext, useEffect } from "react";
 import CommonModal from "../CommonModal";
 import Cookies from "js-cookie";
 import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 // import CartModal from "../CartModal";
 
-// const isAdminView = true;
+const isAdminView = true;
 
 function NavItems({ isModalView = false, isAdminView, router }) {
   return (
@@ -54,8 +55,8 @@ export default function Navbar() {
     isAuthUser,
     setIsAuthUser,
     setUser,
-    currentUpdatedProduct,
-    setCurrentUpdatedProduct,
+    // currentUpdatedProduct,
+    // setCurrentUpdatedProduct,
     showCartModal,
     setShowCartModal
   } = useContext(GlobalContext);
@@ -112,33 +113,40 @@ export default function Navbar() {
                   className={
                     "mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium upprcase tracking-wide text-white"
                   }
-                  onClick={()=> setShowCartModal(true)}
+                  // onClick={()=> setShowCartModal(true)}
                 >
                   Cart
+                </button>
+                <button
+                  className={
+                    "mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium upprcase tracking-wide text-white"
+                   
+                  }>
+                Addmin View
                 </button>
               </Fragment>
              ) : null}
              {user?.role === "admin" ? (
                isAdminView ? (
-                 <button
-                   className={
-                     "mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium upprcase tracking-wide text-white"
-                   }
-                   onClick={() => router.push("/")}
-                 >
-                   Client View
-                 </button>
-               ) : (
-                 <button
-                   onClick={() => router.push("/admin-view")}
-                   className={
-                     "mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium upprcase tracking-wide text-white"
-                   }
-                 >
-                   Admin View
-                 </button>
-               )
-             ) : null}
+                <button
+                className={
+                  "mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium upprcase tracking-wide text-white"
+                }
+                onClick={() => router.push("/")}
+              >
+                Client View
+              </button>
+            ) : (
+              <button
+                onClick={() => router.push("/admin-view")}
+                className={
+                  "mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium upprcase tracking-wide text-white"
+                }
+              >
+                Admin View
+              </button>
+            )
+          ) : null}
              {isAuthUser ? (
                <button
                  onClick={handleLogout}

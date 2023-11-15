@@ -7,7 +7,7 @@ export default function ComponentLevelLoader({ text, color, loading, size }) {
   return (
     <span className="flex gap-1 items-center">
       {text}
-      < PulseLoader
+      <PulseLoader
         color={color}
         loading={loading}
         size={size || 10}

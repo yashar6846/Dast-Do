@@ -1,5 +1,3 @@
-
-
 import connectToDB from "@/database";
 import AuthUser from "@/middleware/AuthUser";
 import Product from "@/models/product";
@@ -43,7 +41,7 @@ export async function POST(req) {
         priceDrop,
       } = extractData;
 
-      const { error } = AddNewProductSchema.validate({  
+      const { error } = AddNewProductSchema.validate({
         name,
         description,
         price,

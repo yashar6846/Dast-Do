@@ -55,8 +55,8 @@ export default function Navbar() {
     isAuthUser,
     setIsAuthUser,
     setUser,
-    // currentUpdatedProduct,
-    // setCurrentUpdatedProduct,
+    currentUpdatedProduct,
+    setCurrentUpdatedProduct,
     showCartModal,
     setShowCartModal
   } = useContext(GlobalContext);
@@ -68,13 +68,13 @@ export default function Navbar() {
 
   // console.log(currentUpdatedProduct, "navbar");
 
-  // useEffect(() => {
-  //   if (
-  //     pathName !== "/admin-view/add-product" &&
-  //     currentUpdatedProduct !== null
-  //   )
-  //     setCurrentUpdatedProduct(null);
-  // }, [pathName]);
+  useEffect(() => {
+    if (
+      pathName !== "/admin-view/add-product" &&
+      currentUpdatedProduct !== null
+    )
+      setCurrentUpdatedProduct(null);
+  }, [pathName]);
 
   function handleLogout() {
     setIsAuthUser(false);

@@ -4,15 +4,15 @@
 import { useRouter } from "next/navigation";
 import ProductButton from "./ProductButtons";
 import ProductTile from "./ProductTile";
-// import { useEffect } from "react";
+import { useEffect } from "react";
 // import Notification from "../Notification";
 
 export default function CommonListing({ data }) {
   const router = useRouter();
 
-//   useEffect(() => {
-//     router.refresh();
-//   }, []);
+  useEffect(() => {
+    router.refresh();
+  }, []);
 
   return (
     <section className="bg-white py-12 sm:py-16">

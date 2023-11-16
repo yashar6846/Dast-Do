@@ -34,7 +34,7 @@ const createUniqueFileName = (getFile) => {
   const timeStamp = Date.now();
   const randomStringValue = Math.random().toString(36).substring(2, 12);
 
-  return `${getFile.name}-${timeStamp}-${randomStringValue}`;
+  // return `${getFile.name}-${timeStamp}-${randomStringValue}`;
 };
 
 async function helperForUPloadingImageToFirebase(file) {
@@ -85,9 +85,9 @@ export default function AdminAddNewProduct() {
 
   const router = useRouter();
 
-//   useEffect(() => {
-//     if (currentUpdatedProduct !== null) setFormData(currentUpdatedProduct);
-//   }, [currentUpdatedProduct]);
+  useEffect(() => {
+    if (currentUpdatedProduct !== null) setFormData(currentUpdatedProduct);
+  }, [currentUpdatedProduct]);
 
   async function handleImage(event) {
     const extractImageUrl = await helperForUPloadingImageToFirebase(
@@ -134,7 +134,7 @@ export default function AdminAddNewProduct() {
       });
 
       setFormData(initialFormData);
-    //   setCurrentUpdatedProduct(null)
+       setCurrentUpdatedProduct(null)
       setTimeout(() => {
         router.push("/admin-view/all-products");
       }, 1000);

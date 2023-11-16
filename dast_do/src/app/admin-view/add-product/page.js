@@ -121,9 +121,9 @@ export default function AdminAddNewProduct() {
   async function handleAddProduct() {
     setComponentLevelLoader({ loading: true, id: "" });
     const res =
-    //   currentUpdatedProduct !== null
-        // ? await updateAProduct(formData)
-         await addNewProduct(formData);
+       currentUpdatedProduct !== null
+         ? await updateAProduct(formData)
+        : await addNewProduct(formData);
 
     console.log(res);
 
@@ -206,8 +206,8 @@ export default function AdminAddNewProduct() {
                 color={"#ffffff"}
                 loading={componentLevelLoader && componentLevelLoader.loading}
               />
-            // ) : currentUpdatedProduct !== null ? (
-            //   "Update Product"
+            ) : currentUpdatedProduct !== null ? (
+              "Update Product"
             ) : (
               "Add Product"
             )}

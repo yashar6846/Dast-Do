@@ -7,7 +7,7 @@ import CommonModal from "../CommonModal";
 import Cookies from "js-cookie";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-// import CartModal from "../CartModal";
+import CartModal from "../CartModal";
 
 const isAdminView = true;
 
@@ -199,7 +199,7 @@ export default function Navbar() {
         show={showNavModal}
         setShow={setShowNavModal}
       />
-      {/* {showCartModal && <CartModal />} */}
+      {showCartModal && <CartModal />}
     </>
   );
 }

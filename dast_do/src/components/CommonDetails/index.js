@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { toast } from "react-toastify";
 import ComponentLevelLoader from "../Loader/componentlevel";
 import Notification from "../Notifcation";
-// import { addToCart } from "@/services/cart";
+import { addToCart } from "@/services/cart";
 
 
 export default function CommonDetails({ item }) {

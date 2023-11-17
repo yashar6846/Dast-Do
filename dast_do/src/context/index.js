@@ -16,6 +16,17 @@ export default function GlobalState({ children }) {
   const [user, setUser] = useState(null);
   const [currentUpdatedProduct, setCurrentUpdatedProduct] = useState(null);
 
+  const [showCartModal, setShowCartModal] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  // const [addresses, setAddresses] = useState([]);
+  // const [addressFormData, setAddressFormData] = useState({
+  //   fullName: "",
+  //   city: "",
+  //   country: "",
+  //   postalCode: "",
+  //   address: "",
+  // });
+
   useEffect(() => {
     console.log(Cookies.get("token"));
 
@@ -42,7 +53,23 @@ export default function GlobalState({ children }) {
         componentLevelLoader,
         setComponentLevelLoader,
         currentUpdatedProduct,
-         setCurrentUpdatedProduct,
+        setCurrentUpdatedProduct,
+        showCartModal,
+        setShowCartModal,
+        cartItems,
+        setCartItems,
+        // addresses,
+        // setAddresses,
+        // addressFormData,
+        // setAddressFormData,
+        // checkoutFormData,
+        // setCheckoutFormData,
+        // allOrdersForUser,
+        // setAllOrdersForUser,
+        // orderDetails,
+        // setOrderDetails,
+        // allOrdersForAllUsers,
+        // setAllOrdersForAllUsers,
       }}
     >
       {children}

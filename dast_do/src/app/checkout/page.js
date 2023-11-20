@@ -4,7 +4,7 @@
 import Notification from "@/components/Notifcation";
 import { GlobalContext } from "@/context";
 import { fetchAllAddresses } from "@/services/address";
-// import { createNewOrder } from "@/services/order";
+import { createNewOrder } from "@/services/order";
 import { callStripeSession } from "@/services/stripe";
 import { loadStripe } from "@stripe/stripe-js";
 import { useRouter, useSearchParams } from "next/navigation";

@@ -5,7 +5,7 @@ import Notification from "@/components/Notifcation";
 import { GlobalContext } from "@/context";
 import { fetchAllAddresses } from "@/services/address";
 // import { createNewOrder } from "@/services/order";
-// import { callStripeSession } from "@/services/stripe";
+import { callStripeSession } from "@/services/stripe";
 import { loadStripe } from "@stripe/stripe-js";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
@@ -30,7 +30,7 @@ export default function Checkout() {
   const params = useSearchParams();
 
   const publishableKey =
-    "pk_test_51NMv6ZSC6E6fnyMeRIEb9oEXdGRCC9yrBTT4xWHgcjWOuFcqFiAHErvaS50K1hl5t5WJXVGfLLWxvb705IWJhA3300yCcrMnlM";
+    "pk_test_51OETPBDsvDtDwehVYWbmF0PXtwplv2iLlFelZfIEnJGdm7QMiDRbRjKzaZ1g7NdPELQuGIRGVcDQBrnIU1QCw2OM00glbTkyS2";
   const stripePromise = loadStripe(publishableKey);
 
   console.log(cartItems);
@@ -112,10 +112,10 @@ export default function Checkout() {
     }
 
     setSelectedAddress(getAddress._id);
-    setCheckoutFormData({
+    setCheckoutFormData({ 
       ...checkoutFormData,
       shippingAddress: {
-        ...checkoutFormData.shippingAddress,
+        ...checkoutFormData,
         fullName: getAddress.fullName,
         city: getAddress.city,
         country: getAddress.country,

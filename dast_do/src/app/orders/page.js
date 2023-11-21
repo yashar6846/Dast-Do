@@ -1,6 +1,6 @@
 "use client";
 
-import Notification from "@/components/Notification";
+import Notification from "@/components/Notifcation";
 import { GlobalContext } from "@/context";
 import { getAllOrdersForUser } from "@/services/order";
 import { useRouter } from "next/navigation";
@@ -121,6 +121,7 @@ export default function Orders() {
           </div>
         </div>
       </div>
+     
       <Notification />
     </section>
   );

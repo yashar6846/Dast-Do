@@ -295,10 +295,10 @@ export default function Checkout() {
             </div>
             <div className="pb-10">
               <button
-                // disabled={
-                //   (cartItems && cartItems.length === 0) ||
-                //   Object.keys(checkoutFormData.shippingAddress).length === 0
-                // }
+                disabled={
+                  (cartItems && cartItems.length === 0) ||
+                  Object.keys(checkoutFormData.shippingAddress).length === 0
+                }
                 onClick={handleCheckout}
                 className="disabled:opacity-50 mt-5 mr-5 w-full  inline-block bg-black text-white px-5 py-3 text-xs font-medium uppercase tracking-wide"
               >
